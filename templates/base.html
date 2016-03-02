@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html lang="en">
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+    html{ /* FULL BROWSER HTML DISPLAY */
+    	height:100%;
+    }
+	h1{ /* HEADER 1 TEXTS */
+		color: #91eac9;
+		font-family: "UniversLTW01-59UltraCn","Zurich W03 Light X Cnd","Helvetica Neue",Helvetica,Arial,sans-serif;
+		font-size: 64px;
+		line-height: 1;
+		margin-bottom: 0;
+		text-align: center;
+		text-transform: uppercase;
+		-webkit-font-smoothing: antialiased;
+    	/*margin-top: -1rem;*/
+	}
+	header{ /* HEADER POSITION */
+		position: fixed;
+		text-align: center;
+		padding:10px;
+		position: 100% 40%;
+	}
+	body{ /* BACKGROUND IMAGE & BODY TEMPLATING */
+		/*background-image: {% block background %}{% endblock %};*/
+		background-image: url("https://farm2.staticflickr.com/1627/24943678040_d9637bdeee_c.jpg");
+		background-position: 25% 50%;
+		background-repeat: no-repeat;
+		background-attachment: fixed;
+		background-size: 640px 480px;
+		height:90%;
+	}
+	a{ /* FORMAT ALL LINKS & UNVISITED LINKS */
+		color: #91eac9;
+		font-family: "UniversLTW01-59UltraCn","Zurich W03 Light X Cnd","Helvetica Neue",Helvetica,Arial,sans-serif;
+		font-size: 20px;
+		text-decoration: none;
+		text-transform: uppercase;
+	}
+	a:visited { /* VISITED LINKS */
+    	color: #59ABE3;
+	}
+	a:hover { /* HOVER OVER LINKS */
+    	color: #3FC380;
+	}
+	.Ranger{  /* RANGER CLASS: TEXT */
+		color: #91eac9;
+		text-align: center;
+		font-size: 40px;
+		font-family: "UniversLTW01-59UltraCn","Zurich W03 Light X Cnd","Helvetica Neue",Helvetica,Arial,sans-serif;
+		line-height: 1;
+		text-transform: uppercase;
+	}
+	#body {					/* DIV CONTAINER, id="body "*/
+	   padding:10px;
+	   padding-bottom:60px;   
+	}
+	#container{				/* DIV CONTAINER, id="container "*/
+		min-height: 100%;
+	}
+	#header {				/* DIV CONTAINER, id="header "*/
+	   padding:10px;
+	}
+	#menu {					/* DIV CONTAINER, id="menu "*/
+		position: relative;
+		padding:60px;
+		top: 175px;
+  		left: 20px;
+	}
+	#footer {				/* DIV CONTAINER, id="footer "*/
+	   position:absolute;
+	   bottom:0;
+	   width:100%;
+	   height:60px;   
+	}
+	</style>
+</head>
+<body>
+	<header>
+		<h1>Evan Carter</h1>
+		{% block time %}{% endblock %}
+	</header>
+	<div id="container">
+		<div id="header">
+		</div>
+		<div id="content">
+			<div id="menu">
+				<a href="http://www.pitchfork.com">Jam/a>
+				<br>
+				<br>
+				<a href="http://www.pitchfork.com">Projects</a>
+				<br>
+				<br>
+				<a href="http://www.pitchfork.com">About Me</a>
+				<br>
+				<br>
+				<a href="http://www.pitchfork.com">Home</a>
+			</div>
+		</div>
+		<div id="footer">
+			{% block footer %}
+		    <hr>
+		    <p style="text-align: center;">Thanks for visiting my site.</p>
+		    {% endblock %}
+		</div>
+	</div>
+</body>
+</html>
