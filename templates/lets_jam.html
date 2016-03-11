@@ -1,24 +1,46 @@
 {% extends "base.html" %}
+{% block page_styling %}
+<style>
+	div.album_display{
+		display: table-cell;
+		margin-bottom: 10px;
+		padding: 100px 200px;
+	}
+	div.container {
+		padding: 10px 0px;
+	}
+	div img{
+		border:1px solid #000000;
+	}
+	p{
+		color: #34495E;
+		font-family: "UniversLTW01-59UltraCn","Zurich W03 Light X Cnd","Helvetica Neue",Helvetica,Arial,sans-serif;
+		font-size: 15px;
+		font-weight: bold;
+		text-transform: none;
+	}
+</style>
+{% endblock %}
 {% block title %}Let's Jam{% endblock %}
 {% block page_head %}<h1 class="Jam">Welcome to Jam</h1>{% endblock %}
 
 {% block page_content %}
 
 <!-- Dynamic Version: For Production to Server -->
-<!-->
 {% for album in favAlbums %}
 	<div>
-		<h2>{{album}}</h2>
+		<!--h2>{{Albums}}</h2-->
 	</div>
 {% endfor %}
-<!-->
 
 <!-- Static Version: For Development Purposes -->
 
-<div>
-	<img src="/jam/static/anything_in_return.jpg">
-	<h2>Anything In Return</h2>
-		<p>Toro y Moi</p>
+<div class="album_display">
+	<img src="/static/anything_in_return.jpg">
+	<div class="container">
+		<h2>Anything In Return</h2>
+			<p>Toro y Moi</p>
+	</div>
 </div>
 
 
