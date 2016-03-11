@@ -4,13 +4,16 @@
 	div.album_display{
 		display: table-cell;
 		margin-bottom: 10px;
-		padding: 100px 200px;
+		padding: 150px 200px;
 	}
 	div.container {
 		padding: 10px 0px;
 	}
-	div img{
-		border:1px solid #000000;
+	div img{ /* FORMAT ALBUM IMAGE */
+
+	}
+	header{
+		position: center;
 	}
 	p{
 		color: #34495E;
@@ -36,11 +39,14 @@
 <!-- Static Version: For Development Purposes -->
 
 <div class="album_display">
+	<a href="/time/jam_out/anything_in_return_review/">
 	<img src="/static/anything_in_return.jpg">
+	</a>
 	<div class="container">
 		<h2>Anything In Return</h2>
 			<p>Toro y Moi</p>
 	</div>
+	{% block review %}{% endblock %}
 </div>
 
 

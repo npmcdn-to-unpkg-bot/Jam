@@ -40,6 +40,11 @@ def lets_jam(request):
 
     return render(request, 'lets_jam.html', {'Albums': addedHTML, 'favAlbums': favAlbumsList})
 
+def lets_jam_review(request):
+    evansReview = """A sweet combination of R&B and Indie Electronic with a touch of Jazz, Toro y Moi creates a unique album that is easy to Listen to on  
+        a rainy day or play at an casual house party."""
+    return render(request, 'anything_in_return_review.html', {'REVIEW': evansReview})
+
 def hours_ahead(request, offset):
     try:
         offset = int(offset)
