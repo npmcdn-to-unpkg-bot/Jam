@@ -15,13 +15,18 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from mysite.views import hello, current_datetime, hours_ahead
+from mysite.views import current_datetime, hours_ahead, lets_jam, evan
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    url(r'^hello/$', hello),
+    # TESTING PAGES
+    url(r'^admin/', admin.site.urls),   # imported
+    # url(r'^hello/$', hello),          # Hello, World
+    
+    # WEB PAGES
     url(r'^time/$', current_datetime),
-    # url(r'^time/evan/$', evan),
+    url(r'^time/jam_out/$', lets_jam),
+    url(r'^time/jam_out$', lets_jam),
+    url(r'^time/evan/$', evan),
     url(r'^time/plus/(\d{1,2})/$', hours_ahead),
 ]
 

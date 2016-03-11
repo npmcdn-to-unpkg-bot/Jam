@@ -11,5 +11,17 @@ class Favorite_Album(models.Model):
 	CoverURL = models.URLField()
 	
 	def __unicode__(self): return u'%s: %s' % (self.AristName, self.AlbumTitle)
+
+	def toString(self):
+		return '%s: %s' % (self.AristName, self.AlbumTitle)
+
+	def albumTitle(self):
+		return '%s' % (self.AlbumTitle)
+
+	def artist(self):
+		return '%s' % (self.AristName)
+
+	#class Meta:
+    #     ordering = ['name']
 	
 
