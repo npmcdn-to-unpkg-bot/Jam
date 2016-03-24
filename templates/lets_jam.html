@@ -4,7 +4,7 @@
 	div.album_display{
 		display: table-cell;
 		margin-bottom: 10px;
-		padding: 150px 200px;
+		padding: 100px 200px;
 	}
 	div.container {
 		padding: 10px 0px;
@@ -30,21 +30,21 @@
 {% block page_content %}
 
 <!-- Dynamic Version: For Production to Server -->
-{% for album in favAlbums %}
+{% for album in featured_albums %}
 	<div>
-		<!--h2>{{Albums}}</h2-->
+		<h2>{{album}}</h2>
 	</div>
 {% endfor %}
 
 <!-- Static Version: For Development Purposes -->
 
 <div class="album_display">
-	<a href="/time/jam_out/anything_in_return_review/">
+	<a href="/time/jam_out/anything_in_return/">
 	<img src="/static/anything_in_return.jpg">
 	</a>
 	<div class="container">
-		<h2>Anything In Return</h2>
-			<p>Toro y Moi</p>
+		<h2>{% block ALBUM_TITLE %}{% endblock %}</h2>
+			<p>{% block ARTIST_NAME %}{% endblock %}</p>
 	</div>
 	{% block review %}{% endblock %}
 </div>

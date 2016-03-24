@@ -1,0 +1,20 @@
+{% extends "lets_jam.html" %}
+
+{% block page_styling %}
+<style>
+	div input{
+		width: 100%;
+	}
+</style>
+{% endblock %}
+
+{% block page_content %}
+<div id="recommendation_block">
+	<h2 style="margin: auto; text-align: center;">Want to Recommend an Artist or Album?</h2>
+	<form style="margin: auto;" method="post">
+		 {% csrf_token %}
+		<span><input type="text" id="recommendation" placeholder="Artist or Album" name="recommened_item"></span>
+		<input type="submit" name="recommened_submit">
+	</form>
+</div>
+{% endblock %}

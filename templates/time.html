@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block style %}
+{% block page_styling %}
 <style>
 	body{
 		background-image: url("https://farm2.staticflickr.com/1627/24943678040_d9637bdeee_c.jpg");
@@ -12,4 +12,22 @@
 
 {% block time %}
 <p class="Ranger" style="margin-top: 0;">{{current_time}}</p>
+{% endblock %}
+
+{% block menu %}
+<div id="menu">
+	<a href="/time/jam_out/">Jam</a>
+	<br>
+	<br>
+	<a href="http://www.github.com/cartev">Github</a>
+	<br>
+	<br>
+	<a href="http://www.linkedin.com/in/cartev">LinkedIn</a>
+	<br>
+	<br>
+	<a href="http://www.pitchfork.com">About Me</a>
+	<br>
+	<br>
+	<a href="/time/">Home</a>
+</div>
 {% endblock %}

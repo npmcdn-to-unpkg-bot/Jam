@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from mysite.views import current_datetime, hours_ahead, lets_jam, lets_jam_review, evan
+from mysite.views import current_datetime, hours_ahead, lets_jam, lets_jam_review, evan, lets_jam_recommend
 
 urlpatterns = [
     # TESTING PAGES
@@ -26,8 +26,8 @@ urlpatterns = [
     url(r'^time/$', current_datetime),
     url(r'^time/jam_out/$', lets_jam),
     url(r'^time/jam_out$', lets_jam),
-    # change this - include in jam out URL function w/ variable
-    url(r'^time/jam_out/anything_in_return_review/$', lets_jam_review),
+    url(r'^time/jam_out/recommend/$', lets_jam_recommend),
+    url(r'^time/jam_out/([a-z0-9_-]{1,100})/$', lets_jam_review),
     url(r'^time/evan/$', evan),
     url(r'^time/plus/(\d{1,2})/$', hours_ahead),
 ]
