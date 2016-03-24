@@ -47,10 +47,13 @@ def lets_jam(request):
     # Home Page of JAM
     # Page to display Featured Favorite Albums
     all_artist = Artists.objects.all()
-    print all_artist
     featured_albums = list()
     for artist in all_artist:
-        featured_albums.append(Album.objects.filter(ArtistID=artist.artistID()))
+        if len(Album.objects.filter(ArtistID=artist.artistID())) != 0:
+            featured_albums.append(Album.objects.filter(ArtistID=artist.artistID()))
+        else:
+            # If no albums // Display Message
+            featured_albums = "There are no Featured Albums at the Moment"
     # GET ALBUM COVERS / FOR LOOP IN lets_jam.html
     return render(request, 'lets_jam.html', {'featured_albums': featured_albums})
 
