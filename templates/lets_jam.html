@@ -28,26 +28,19 @@
 {% block page_head %}<h1 class="Jam">Welcome to Jam</h1>{% endblock %}
 
 {% block page_content %}
-
-<!-- Dynamic Version: For Production to Server -->
-{% for album in featured_albums %}
-	<div>
-		<h2>{{album}}</h2>
-	</div>
-{% endfor %}
-
-<!-- Static Version: For Development Purposes -->
-
-<div class="album_display">
-	<a href="/time/jam_out/anything_in_return/">
-	<img src="/static/anything_in_return.jpg">
-	</a>
-	<div class="container">
-		<h2>{% block ALBUM_TITLE %}{% endblock %}</h2>
-			<p>{% block ARTIST_NAME %}{% endblock %}</p>
-	</div>
-	{% block review %}{% endblock %}
-</div>
-
-
+{% load tags %}
+<!-- Featured Albums -->
+{% if no_features %}
+	<h2>There are no featured albums at the moment.</h2>
+{% elif featured_albums %}
+	{% for album in featured_albums %}
+		<div>
+			<img src="/static/{{album|underscore}}.jpg">
+			<h2>{{album}}</h2>
+		</div>
+	{% endfor %}
+{% endif %}
+<img src="/static/{{test|underscore}}.jpg">
+<h2>{{test}}</h2>
 {% endblock %}
+

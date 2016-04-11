@@ -2,16 +2,41 @@
 
 {% block page_styling %}
 <style>
-	div input{
+	#recommendation_block{
+		margin: auto;
+		width: 45%;
+	}
+	input[type=text]{
 		width: 100%;
+	    padding: 12px 20px;
+	    margin: 8px 0;
+	    display: inline-block;
+	    border: 1px solid #ccc;
+	    border-radius: 4px;
+	    box-sizing: border-box;
+	}
+
+	input[type=submit] {
+	    width: 100%;
+	    background-color: #34495E;
+	    color: white;
+	    padding: 14px 20px;
+	    margin: 8px 0;
+	    border: none;
+	    border-radius: 4px;
+	    cursor: pointer;
 	}
 </style>
 {% endblock %}
 
 {% block page_content %}
 <div id="recommendation_block">
-	<h2 style="margin: auto; text-align: center;">Want to Recommend an Artist or Album?</h2>
-	<form style="margin: auto;" method="post">
+	<p>{{message}}</p>
+	{% if source %}
+		<img src="{{source}}" id="album_art_or_artist">
+	{% endif %}
+	<h2 style="margin: auto; text-align: center;">Want to Recommend an Album?</h2>
+	<form id="recommendation_form" style="margin: auto;" method="post">
 		 {% csrf_token %}
 		<span><input type="text" id="recommendation" placeholder="Artist or Album" name="recommened_item"></span>
 		<input type="submit" name="recommened_submit">
