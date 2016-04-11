@@ -43,7 +43,24 @@ def hours_ahead(request, offset):
     return render(request, 'hours_ahead.html', {'hour_offset': offset, 'next_time': dt})
 
 def evan(request):
-    return render(request, 'evan.html')
+    with open('jam/static/__resume__.pdf', 'rb') as pdf:
+        response = HttpResponse(pdf.read(), content_type='application/pdf')
+        response['Content-Disposition'] = 'inline;filename=some_file.pdf'
+        pdf.closed
+        return response
+    
+    
+    # #read the pdf file
+    # location = 'jam/static/__resume__.pdf'
+    # resume = open(location, 'rb')
+    # content = resume.read()
+    # resume.close
+
+    # #serve the file
+    # response = HttpResponse(content, content_type='application/pdf')
+    # response['Content-Disposition'] = 'attachment; filename=Evan_Carter_Resume.pdf'
+
+    # return response
 
 def lets_jam(request):
     # Home Page of JAM
@@ -110,6 +127,7 @@ def lets_jam_review(request, album_title):
         json_Search_response = json.load(spotify_Search_response)
         spotify_Get_an_Album_API_response = urllib2.urlopen('https://api.spotify.com/v1/albums/' + json_Search_response['albums']['items'][0]['id'] + '?market=US')
         matched_artist = Artists.objects.filter(SpotifyID=json_Search_response['albums']['items'][0]['id'])
+        print matched_artist
         if not matched_artist:
             json_Get_an_Album_API_response = json.load(spotify_Get_an_Album_API_response)
             spotify_Artist_ID = json_Get_an_Album_API_response['artists'][0]['id']
