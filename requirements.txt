@@ -1,0 +1,4 @@
+beautifulsoup4==4.4.1
+Django==1.9.2
+Pillow==3.1.0
+pitchfork==0.1.3
