@@ -22,16 +22,49 @@
 		font-weight: bold;
 		text-transform: none;
 	}
+	a{ /* FORMAT ALL LINKS & UNVISITED LINKS */
+		color: #CF000F;
+		font-family: "UniversLTW01-59UltraCn","Zurich W03 Light X Cnd","Helvetica Neue",Helvetica,Arial,sans-serif;
+		font-size: 20px;
+		text-decoration: none;
+		text-transform: uppercase;
+	}
+	a:visited { /* VISITED LINKS */
+    	color: #E74C3C;
+	}
+	a:hover { /* HOVER OVER LINKS */
+    	color: #3FC380;
+	}
+	#features{
+		text-align: center;
+  		margin-left: auto;
+  		margin-right: auto;
+	}
 </style>
 {% endblock %}
+
 {% block title %}Let's Jam{% endblock %}
+
 {% block page_head %}<h1 class="Jam">Welcome to Jam</h1>{% endblock %}
 
 {% block page_content %}
+
+<div id="menu">
+	<a href="/time/jam_out/">Home</a>
+	<br>
+	<br>
+	<a href="/time/jam_out/recommend/">Recommend</a>
+	<br>
+	<br>
+	<a href="/time/jam_out/recommend/">Reviews</a>
+</div>
+
 {% load tags %}
 <!-- Featured Albums -->
+<div id="features">
 {% if no_features %}
-	<h2>There are no featured albums at the moment.</h2>
+	<h3>There are no featured albums at the moment.</h3>
+
 {% elif featured_albums %}
 	{% for album in featured_albums %}
 		<div>
@@ -40,7 +73,7 @@
 		</div>
 	{% endfor %}
 {% endif %}
-<img src="/static/{{test|underscore}}.jpg">
-<h2>{{test}}</h2>
+</div>
+
 {% endblock %}
 

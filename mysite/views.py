@@ -1,32 +1,14 @@
 from django import template
-from django.template.defaultfilters import stringfilter
 from django.shortcuts import get_object_or_404, render
-from django.http import  Http404, HttpResponse
+from django.http import  Http404, HttpResponse, JsonResponse
 from time import gmtime, strftime
-from collections import deque
-from PIL import Image
-from jam.models import Artists, Album
 import datetime
-import pitchfork
 import urllib
 import urllib2
-import json
 
-###################
-#          API KEYS
-###################
-
-spotify_api_key = '509df3f3d7584069a23c2db440960b20'
-spotify_api_secret = 'e3826548f35d4ecb88c4eb8032ada051'
-OAuth_token = 'BQDbMT3TcgCddi2y7_NehZU54TGQBk0MXbgO9izP5WrCeO40WqLdL98j88zeQwrMIBGj9'
-
-echonest_api_key = 'JXWIZXVWFCDBT9DVG'
-echonest_consumer_key = 'd3755c57dc73a9132325cd5bac8d4556'
-echonest_shared_secret = '1b5YciWYSia7H0EMMM8rLw'
-
-###################
-#    PAGE FUNCTIONS
-###################
+###########################
+#    GENERAL PAGE FUNCTIONS
+###########################
 
 def current_datetime(request):
     now = strftime("%Y-%m-%d %H:%M:%S", gmtime())
@@ -48,128 +30,17 @@ def evan(request):
         response['Content-Disposition'] = 'inline;filename=some_file.pdf'
         pdf.closed
         return response
-    
-    
-    # #read the pdf file
-    # location = 'jam/static/__resume__.pdf'
-    # resume = open(location, 'rb')
-    # content = resume.read()
-    # resume.close
-
-    # #serve the file
-    # response = HttpResponse(content, content_type='application/pdf')
-    # response['Content-Disposition'] = 'attachment; filename=Evan_Carter_Resume.pdf'
-
-    # return response
-
-def lets_jam(request):
-    # Home Page of JAM
-    # Page to display Featured Favorite Albums
-    all_artist = Artists.objects.all()
-    featured_albums = list()
-    no_features = 0
-    for artist in all_artist:
-        if len(Album.objects.filter(ArtistID=artist.artistID())) != 0:
-            featured_albums.append(Album.objects.filter(ArtistID=artist.artistID()))
-        else:
-            # If no albums // Display Message
-            no_features = 1
-    # GET ALBUM COVERS
-
-    test = 'anything in return'
-
-    return render(request, 'lets_jam.html', {'no_features': no_features, 'featured_albums': featured_albums, 'test': test})
-
-def lets_jam_recommend(request):
-    # Recommendation Page
-    if (request.method == 'GET'):
-        return render(request, 'lets_jam_recommend.html', {'message': '', 'source': ""})
-    else:
-        try:
-            recommened_item = request.POST['recommened_item']
-            spotify_Search_response_album = urllib2.urlopen('https://api.spotify.com/v1/search?q=' + convert_to_query(recommened_item) + '&type=album&market=US')
-            json_Search_response_album = json.load(spotify_Search_response_album)
-            spotify_Search_response_artist = urllib2.urlopen('https://api.spotify.com/v1/search?q=' + convert_to_query(recommened_item) + '&type=artist&market=US')
-            json_Search_response_artist = json.load(spotify_Search_response_artist)
-            if (json_Search_response_album['albums']['items'] != [ ]):
-                # Matching Album
-                if not (Album.objects.filter(AlbumTitle=recommened_item)):
-                    source = json_Search_response_album['albums']['items'][0]['images'][1]['url']
-                    message = "You've Successfully Recommmended: " + recommened_item.title() + "."
-
-                    return render(request, "lets_jam_recommend.html", {'message': message, 'source': source})
-                else:
-                    message = "Hey, what do you know, someone has already suggested " + recommened_item.title() + ". \n Probably because you've got good taste in Music!"
-                    return render(request, "lets_jam_recommend.html", {'message': message, 'source': source})
-            # elif(json_Search_response_artist['artists']['items'] != [ ]):
-            #     # Matching Artist
-            #     print "matching artist"
-            #     message = "We Have an Artist match!"
-            #     return render(request, "lets_jam_recommend.html", {'message': "We Have a Match!", 'source': source})
-            else:
-                raise ValueError
-        except ValueError:
-            # we couldn't find your recommendation
-            # display error message
-            return render(request, 'lets_jam_recommend.html', {'message': 'We couldn\'t find that Album', 'source': ""})
-
-    return render(request, 'lets_jam_recommend.html', {'message': '', 'source': ""})
-
-def lets_jam_review(request, album_title):
-    album_title = url_argument_parse(album_title)
-    # GET_ARTIST
-    # [Query DB to get Artist ID & Artist Name]
-    albumSet = Album.objects.filter(AlbumTitle=album_title)
-    # if empty: No Corresponding Artist / Create Artist
-    if not albumSet:
-        # search album title, get album ID, get artist ID
-        spotify_Search_response = urllib2.urlopen('https://api.spotify.com/v1/search?q=' + convert_to_query(album_title) + '&type=album&market=US')
-        json_Search_response = json.load(spotify_Search_response)
-        spotify_Get_an_Album_API_response = urllib2.urlopen('https://api.spotify.com/v1/albums/' + json_Search_response['albums']['items'][0]['id'] + '?market=US')
-        matched_artist = Artists.objects.filter(SpotifyID=json_Search_response['albums']['items'][0]['id'])
-        print matched_artist
-        if not matched_artist:
-            json_Get_an_Album_API_response = json.load(spotify_Get_an_Album_API_response)
-            spotify_Artist_ID = json_Get_an_Album_API_response['artists'][0]['id']
-            spotify_Artist_Name = json_Get_an_Album_API_response['artists'][0]['name']
-            spotify_Get_an_Artist_API_response = urllib2.urlopen('https://api.spotify.com/v1/artists/' + spotify_Artist_ID)
-            json_Get_an_Artist_API_response = json.load(spotify_Get_an_Artist_API_response)
-            spotify_Primary_Genre = json_Get_an_Artist_API_response['genres'][0]
-            spotify_Secondary_Genre = json_Get_an_Artist_API_response['genres'][1]
-            new_artist = Artists.objects.create(ArtistName=spotify_Artist_Name, SpotifyID=spotify_Artist_ID, PrimaryGenre=spotify_Primary_Genre, SecondaryGenre=spotify_Secondary_Genre)
-            new_artist.save()
-            matched_artist = Artists.objects.filter(SpotifyID=json_Search_response['albums']['items'][0]['id'])
-        #else:
-
-        # get artist from matched_artist querySet
-        # new_album = Album.objects.create(AlbumTitle=album_title, SpotifyAlbumID=json_Search_response['albums']['items'][0]['id'], ArtistName=artist.id, Favorite=0)
-        # new_album.save()
-
-    # Don't have spotify_Artist_ID (defined and use in if statement)
-    # artistSet = Artists.objects.filter(SpotifyID=spotify_Artist_ID)
-    # print artistSet
-    # artist = artistSet.objects.get(AlbumTitle=album_title)
-    # artist_name = artist.ArtistName
-    # print artist.ArtistName
-
-    # GET_ALBUM_REVIEW
-    # Pitchfork Libary search() Feature Currently Broken
-    # review = pitchfork.search(artist, album)
-    review = 'where my personal review will be' 
-    album_title  = album_title.title()
-    # TESTING SPOTIFY API
-    
-
-    # ECHONEST API
-    # url2 = 'http://developer.echonest.com/api/v4/artist/news?api_key=JXWIZXVWFCDBT9DVG&id=spotify:artist:5l8VQNuIg0turYE1VtM9zV&format=json'
-    # API_response = urllib2.urlopen(url)
-    # json_response = json.load(API_response)
-
-    return render(request, 'album_review.html', {'ALBUM': album_title, 'ARTIST': artist_name, 'REVIEW': review})
 
 ###################
 #  HELPER FUNCTIONS
 ###################
+
+def spotify_gen_search(recommened_item):
+    spotify_Search_response_album = urllib2.urlopen('https://api.spotify.com/v1/search?q=' + convert_to_query(recommened_item) + '&type=album&market=US')
+    json_Search_response_album = json.load(spotify_Search_response_album)
+    spotify_Search_response_artist = urllib2.urlopen('https://api.spotify.com/v1/search?q=' + convert_to_query(recommened_item) + '&type=artist&market=US')
+    json_Search_response_artist = json.load(spotify_Search_response_artist)
+    return json_Search_response_artist, json_Search_response_album
 
 def url_argument_parse(album):
     title = ''
@@ -183,10 +54,6 @@ def url_argument_parse(album):
             title += album[frontOfString:]
     return title
 
-######################
-# DEPRICATED FUNCTIONS
-######################
-
 def convert_to_query(album_title):
     queryTitle = ''
     for character in range(len(album_title)):
@@ -196,6 +63,8 @@ def convert_to_query(album_title):
             queryTitle += album_title[character]
     return queryTitle
 
-
+######################
+# DEPRICATED FUNCTIONS
+######################
 
     
