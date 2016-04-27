@@ -40,8 +40,7 @@ urlpatterns = [
     # url(r'^time/add_artist/([a-z0-9_-]{1,100})$', add_artist), # Adding Artist to DB from Spotify API
     
     # API Pages
-    url(r'^api/artists/([A-Za-z0-9_-]{1,10000})/$', artist_detail),
-
+    url(r'^time/api/artists/([A-Za-z0-9_-]{1,10000})/$', artist_detail),
     # If you're intending to use the browsable API you'll probably also want to add REST framework's 
     # login and logout views. Add the following to your root urls.py file:
     # url(r'^', include(router.urls)),
