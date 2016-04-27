@@ -131,5 +131,5 @@ USE_TZ = True
 STATIC_ROOT = '/jam/static/'
 STATIC_URL = '/static/'
 STATICFILES_DIRS = ( 
-      '~/Documents/PersonalProjects/Django/mysite/jam/static/',  
+      '/jam/static/',  
 )
