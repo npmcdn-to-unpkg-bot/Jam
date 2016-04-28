@@ -130,5 +130,5 @@ USE_TZ = True
 STATIC_ROOT = '/jam/static/'
 STATIC_URL = '/static/'
 STATICFILES_DIRS = ( 
-    '../mysite/mysite/static_collection',  
+    '../mysite/static_collection',  
 )
