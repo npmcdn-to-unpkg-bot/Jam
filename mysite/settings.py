@@ -131,5 +131,5 @@ USE_TZ = True
 STATIC_ROOT = '/jam/static/'
 STATIC_URL = '/static/'
 STATICFILES_DIRS = ( 
-    os.path.join(BASE_DIR, 'misc/'),  
+    '/myapp/misc/',  
 )
