@@ -1,10 +1,12 @@
 from django import template
+from time import gmtime, strftime
 from django.shortcuts import get_object_or_404, render
 from django.http import  Http404, HttpResponse, JsonResponse
 from django.shortcuts import render
 from jam.models import Artists, Album
 from jam.API_Config import *
 # from django.core.mail import send_mail
+import urllib
 import urllib2
 import json
 
@@ -143,6 +145,29 @@ def add_artist(request, artist_query):
     pic_url = urllib.urlopen("https://farm2.staticflickr.com/1627/24943678040_d9637bdeee_c.jpg")
     return render(request, 'time.html', {'current_time': now, 'page_title': page_title})
 
+
+def add_album(request, album_query):
+    album_query = url_argument_parse(album_query)
+    json_Search_response_artist, json_Search_response_album = spotify_gen_search(album_query)
+
+    spotify_Album_ID = json_Search_response_album['albums']['items'][0]['id']
+    spotify_Album_Name = json_Search_response_album['albums']['items'][0]['name']
+
+    json_Search_response_album = spotify_album_search(spotify_Album_ID)
+    spotify_Artist_ID = json_Search_response_album["artists"][0]["id"]
+    spotify_Artist_Name = json_Search_response_album["artists"][0]["name"]
+
+    artist = Artists.objects.filter(SpotifyID=spotify_Artist_ID)
+    artist = list(artist[:1])
+
+    new_album = Album.objects.create(AlbumTitle=spotify_Album_Name, SpotifyAlbumID=spotify_Album_ID, ArtistID=artist[0])
+    new_album.save()
+
+
+    now = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+    page_title = "Successfully added " + spotify_Album_Name
+    return render(request, 'time.html', {'current_time': now, 'page_title': page_title})
+
 ###################
 #  HELPER FUNCTIONS
 ###################
@@ -153,6 +178,12 @@ def spotify_gen_search(recommened_item):
     spotify_Search_response_artist = urllib2.urlopen('https://api.spotify.com/v1/search?q=' + convert_to_query(recommened_item) + '&type=artist&market=US')
     json_Search_response_artist = json.load(spotify_Search_response_artist)
     return json_Search_response_artist, json_Search_response_album
+
+def spotify_album_search(album_id):
+    api_url = "https://api.spotify.com/v1/albums/" + album_id + "?market=US"
+    json_Search_response_album = json.load(urllib2.urlopen(api_url))
+    return json_Search_response_album
+
 
 def url_argument_parse(album):
     title = ''

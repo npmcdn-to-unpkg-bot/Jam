@@ -38,6 +38,8 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),   # imported
     # url(r'^hello/$', hello),          # Hello, World
     # url(r'^time/add_artist/([a-z0-9_-]{1,100})$', add_artist), # Adding Artist to DB from Spotify API
+    # url(r'^time/add_album/([A-Za-z0-9_-]{1,100})$', add_album), # Adding Album to DB from Spotify API
+
     
     # API Pages
     url(r'^time/api/artists/([A-Za-z0-9_-]{1,10000})/$', artist_detail),

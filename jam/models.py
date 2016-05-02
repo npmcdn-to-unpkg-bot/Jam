@@ -25,7 +25,7 @@ class Artists(models.Model):
     
 class Album(models.Model):
     AlbumTitle = models.CharField(max_length=255)
-    SpotifyAlbumID = models.CharField(max_length=255, default=1)
+    SpotifyAlbumID = models.CharField(primary_key=True, max_length=255)
     ArtistID = models.ForeignKey(Artists, on_delete=models.CASCADE)
     Favorite = models.IntegerField(default=0)
 
@@ -39,7 +39,7 @@ class Album(models.Model):
 
 class Profile(models.Model):
     RealName = models.CharField(max_length=255)
-    Username = models.CharField(max_length=255)
+    Username = models.CharField(primary_key=True, max_length=255)
     Email = models.CharField(max_length=255)
     Password = models.CharField(max_length=255)
     #  Avatar = models.CharField(max_length=255)
