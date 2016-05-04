@@ -13,13 +13,33 @@
 
 	}
 	header{
+		background-color: #CF000F;
+		color: white;
 		position: center;
+	}
+	h1{
+		color: #34495E;
+		display: inline;
+		margin-top: 0px;
+		padding-top: 0px;
+		text-transform: none;
+	}
+	h2{
+		padding-top: 0px;
+		text-transform: none;
+		display: inline;
+	}
+	h3{
+		color: #34495E;
+		font-family: "UniversLTW01-59UltraCn","Zurich W03 Light X Cnd","Helvetica Neue",Helvetica,Arial,sans-serif;
+		text-transform: none;
 	}
 	p{
 		color: #34495E;
 		font-family: "UniversLTW01-59UltraCn","Zurich W03 Light X Cnd","Helvetica Neue",Helvetica,Arial,sans-serif;
 		font-size: 15px;
 		font-weight: bold;
+		display: flex;
 		text-transform: none;
 	}
 	a{ /* FORMAT ALL LINKS & UNVISITED LINKS */
@@ -35,44 +55,94 @@
 	a:hover { /* HOVER OVER LINKS */
     	color: #3FC380;
 	}
+	#header_placement{
+		background-color: #CF000F;
+		height: 17%;
+		width: 100%;
+	}
 	#features{
 		text-align: center;
   		margin-left: auto;
   		margin-right: auto;
+	}
+	#container{
+		height: 70%;
+	}
+	.nav{
+		padding-top: .5rem;
+		padding-bottom: .5rem;
+		padding-left: 1rem;
+		padding-right: 1rem;
+	}
+	.album_art{
+		float: left;
+	}
+	.album_review_detail_preview{
+		float: left;
+		padding-left: 1rem;
+	}
+	#nav_bar{
+		padding-top: 2%;
+		margin: auto;
+	}
+	#features_box{
+		margin: auto;
+		width: 75%;
+	}
+	#feature_label{
+		/*background-color: #ECECEC; */
+		height: 17px;	
+		width: 100%;
+	}
+	#features_listing{
+		padding-top: 5px;
 	}
 </style>
 {% endblock %}
 
 {% block title %}Let's Jam{% endblock %}
 
-{% block page_head %}<h1 class="Jam">Welcome to Jam</h1>{% endblock %}
+{% block page_head %}
+<h1 class="Jam">Jam</h1>
+<nav id="home_navigation">
+	<div id="nav_bar">
+	<a href="/time/jam_out/" class="nav">Home</a>
+	<a href="/time/jam_out/recommend/" class="nav">Recommend</a>
+	</div>
+</div>
+
+{% endblock %}
 
 {% block page_content %}
 
-<div id="menu">
-	<a href="/time/jam_out/">Home</a>
-	<br>
-	<br>
-	<a href="/time/jam_out/recommend/">Recommend</a>
-	<br>
-	<br>
-	<a href="/time/jam_out/recommend/">Reviews</a>
-</div>
-
 {% load tags %}
 <!-- Featured Albums -->
-<div id="features">
-{% if no_features %}
-	<h3>There are no featured albums at the moment.</h3>
+<div id="features_box">
+	<div id="feature_label">
+		<h3>featured albums</h3>
+	</div>
+	<hr>
+	<div id="features_listing">
+		{% if no_features %}
+			<h3>There are no featured albums at the moment.</h3>
 
-{% elif featured_albums %}
-	{% for album in featured_albums %}
-		<div>
-			<img src="/static/{{album|underscore}}.jpg">
-			<h2>{{album}}</h2>
-		</div>
-	{% endfor %}
-{% endif %}
+		{% elif featured_albums %}
+			{% for album in featured_albums %}
+				<div class="feature">
+					<div class="album_art">
+						<a href="/time/jam_out/{{album.albumTitle|underscore}}/">
+						<img src="/static/{{album.albumTitle|underscore}}.jpg">
+						</a>
+					</div>
+					<div class="album_review_detail_preview">
+						<h1>{{album.albumTitle}}</h1>
+						<h3>{{album.artistName}}</h3>
+						<p>{{album.featureReview}}</p>
+					</div>	
+				</div>
+			{% endfor %}
+		{% endif %}
+	</div>
 </div>
 
 {% endblock %}

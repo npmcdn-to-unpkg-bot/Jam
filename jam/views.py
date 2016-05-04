@@ -22,6 +22,20 @@ echonest_api_key = 'JXWIZXVWFCDBT9DVG'
 echonest_consumer_key = 'd3755c57dc73a9132325cd5bac8d4556'
 echonest_shared_secret = '1b5YciWYSia7H0EMMM8rLw'
 
+########################
+#  FEATURE WRAPPER CLASS
+########################
+
+class Feature:
+
+    def __init__(self, name, title, review):
+        self.artistName = name
+        self.albumTitle = title
+        self.featureReview = review
+
+    def __unicode__(self):
+        return self.artistName + " " + self.albumTitle + " " + self.featureReview
+
 #######################
 #    JAM VIEW FUNCTIONS
 #######################
@@ -29,20 +43,19 @@ echonest_shared_secret = '1b5YciWYSia7H0EMMM8rLw'
 def lets_jam(request):
     # Home Page of JAM
     # Page to display Featured Favorite Albums
-    all_artist = Artists.objects.all()
-    featured_albums = list()
-    no_features = 0
-    for artist in all_artist:
-        if len(Album.objects.filter(ArtistID=artist.artistID())) != 0:
-            featured_albums.append(Album.objects.filter(ArtistID=artist.artistID()))
-        else:
-            # If no albums // Display Message
-            no_features = 1
-    # GET ALBUM COVERS
+    featured_albums_list = list(Album.objects.filter(Favorite=1))
 
-    test = 'anything in return'
+    if featured_albums_list != []:
+        no_features = 0
+        features = []
+        for album in featured_albums_list:
+            artist = Artists.objects.get(SpotifyID=album.ArtistID_id)
+            feature = Feature(artist.ArtistName, album.AlbumTitle, "test")
+            features.append(feature)
+    else:
+        no_features = 1
 
-    return render(request, 'lets_jam.html', {'no_features': no_features, 'featured_albums': featured_albums, 'test': test})
+    return render(request, 'lets_jam.html', {'no_features': no_features, 'featured_albums': features})
 
 def lets_jam_recommend(request):
     # Recommendation Page

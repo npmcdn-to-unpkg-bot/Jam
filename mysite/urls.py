@@ -55,7 +55,7 @@ urlpatterns = [
     url(r'^time/jam_out/$', lets_jam),
     url(r'^time/jam_out$', lets_jam),
     url(r'^time/jam_out/recommend/$', lets_jam_recommend),
-    url(r'^time/jam_out/([a-z0-9_-]{1,100})/$', lets_jam_review),
+    url(r'^time/jam_out/([A-Za-z0-9_-]{1,100})/$', lets_jam_review),
     url(r'^time/evan/$', evan),
     url(r'^time/plus/(\d{1,2})/$', hours_ahead),
 
