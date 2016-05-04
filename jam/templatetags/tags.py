@@ -6,4 +6,5 @@ register = template.Library()
 
 @register.filter
 def underscore(album):
-    return album.replace(' ', '_')
+    album = album.replace(' ', '_')
+    return album.lower()
