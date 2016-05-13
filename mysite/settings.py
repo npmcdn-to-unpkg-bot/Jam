@@ -24,7 +24,7 @@ SECRET_KEY = 't$%w8ne8sj9+-!h@+n$=qm&-5fd&lcf_fd#yo&ypkgg*ujnj3%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.evancarter.me']
 
 # Django REST API Framework
 
