@@ -42,10 +42,10 @@ class Profile(models.Model):
     Username = models.CharField(primary_key=True, max_length=255)
     Email = models.CharField(max_length=255)
     Password = models.CharField(max_length=255)
-    #  Avatar = models.CharField(max_length=255)
+    # Avatar = models.ImageField()
 
 class Review(models.Model):
     ArtistID = models.ForeignKey(Artists, on_delete=models.CASCADE)
     AlbumID = models.ForeignKey(Album, on_delete=models.CASCADE)
     ReviewerProfile = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    # Review = model.blob
+    # Review = model.TextField()

@@ -1,10 +1,35 @@
 {% extends "lets_jam.html" %}
-
-{% block title %}Toro Y Moi - {{ALBUM}}{% endblock %}
+{% block title %}{{artistName}} - {{albumTitle}}{% endblock %}
 {% block page_head %}<h1 class="Jam">Jam</h1>{% endblock %}
 
-{% block ALBUM_TITLE %}{{ALBUM}}{% endblock %}
+{% block review_page_style %}
+<style>
+#article_body{
+	width: 100%;
+}
+</style>
+{% endblock %}
 
-{% block ARTIST_NAME %}{{ARTIST}}{% endblock %}
+{{article_header}}
 
-{% block review %}<p>{{REVIEW}}</p>{% endblock %}
+{% block feature_content %}
+{% if true %}
+	{% load tags %}
+	<div class="feature">
+		<div class="album_review_detail_preview">
+			<h1>{{albumTitle}}</h1>
+			<h3>{{artistName}}</h3>
+		</div>
+		<div class="album_art">
+			<img src="/static/{{albumTitle|underscore}}.jpg">
+		</div>
+	</div>
+	<!-- this is messed up-->
+	<div id="article_body">
+			<p>{{featureReview}}</p>
+	</div>
+
+{% else %}
+	<h3>Oops. Looks like there is nothing here. Sorry about that.</h3>
+{% endif %}
+{% endblock %}

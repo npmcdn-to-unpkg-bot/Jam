@@ -60,11 +60,6 @@
 		height: 17%;
 		width: 100%;
 	}
-	#features{
-		text-align: center;
-  		margin-left: auto;
-  		margin-right: auto;
-	}
 	#container{
 		height: 70%;
 	}
@@ -74,20 +69,26 @@
 		padding-left: 1rem;
 		padding-right: 1rem;
 	}
+	.feature{
+		height: 319px;
+  		margin-left: auto;
+  		margin-right: auto;
+  		padding-bottom: 1rem;
+	}
 	.album_art{
-		float: left;
+		float: right;
 	}
 	.album_review_detail_preview{
 		float: left;
-		padding-left: 1rem;
+		width: 45%;
 	}
 	#nav_bar{
 		padding-top: 2%;
 		margin: auto;
 	}
-	#features_box{
+	#display_box{
 		margin: auto;
-		width: 75%;
+		width: 62%;
 	}
 	#feature_label{
 		/*background-color: #ECECEC; */
@@ -98,6 +99,8 @@
 		padding-top: 5px;
 	}
 </style>
+{% endblock %}
+{% block review_page_style %}
 {% endblock %}
 
 {% block title %}Let's Jam{% endblock %}
@@ -115,34 +118,16 @@
 
 {% block page_content %}
 
-{% load tags %}
 <!-- Featured Albums -->
-<div id="features_box">
+<div id="display_box">
 	<div id="feature_label">
-		<h3>featured albums</h3>
+		<h3>{{article_header}}</h3>
 	</div>
 	<hr>
 	<div id="features_listing">
-		{% if no_features %}
-			<h3>There are no featured albums at the moment.</h3>
-
-		{% elif featured_albums %}
-			{% for album in featured_albums %}
-				<div class="feature">
-					<div class="album_art">
-						<a href="/time/jam_out/{{album.albumTitle|underscore}}/">
-						<img src="/static/{{album.albumTitle|underscore}}.jpg">
-						</a>
-					</div>
-					<div class="album_review_detail_preview">
-						<h1>{{album.albumTitle}}</h1>
-						<h3>{{album.artistName}}</h3>
-						<p>{{album.featureReview}}</p>
-					</div>	
-				</div>
-			{% endfor %}
-		{% endif %}
+		{% block feature_content%}{% endblock %}
 	</div>
+
 </div>
 
 {% endblock %}

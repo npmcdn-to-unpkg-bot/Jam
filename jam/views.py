@@ -22,6 +22,12 @@ echonest_api_key = 'JXWIZXVWFCDBT9DVG'
 echonest_consumer_key = 'd3755c57dc73a9132325cd5bac8d4556'
 echonest_shared_secret = '1b5YciWYSia7H0EMMM8rLw'
 
+#####################
+#               CACHE
+#####################
+
+features_cache = set()
+
 ########################
 #  FEATURE WRAPPER CLASS
 ########################
@@ -50,12 +56,12 @@ def lets_jam(request):
         features = []
         for album in featured_albums_list:
             artist = Artists.objects.get(SpotifyID=album.ArtistID_id)
-            feature = Feature(artist.ArtistName, album.AlbumTitle, "test")
+            feature = Feature(artist.ArtistName, album.AlbumTitle, "TESTING TESTING TESTING TESTINGTESTING TESTING TESTING TESTINGTESTING TESTING TESTING TESTINGTESTING TESTING TESTING TESTINGTESTING TESTING TESTING TESTING")
             features.append(feature)
     else:
         no_features = 1
 
-    return render(request, 'lets_jam.html', {'no_features': no_features, 'featured_albums': features})
+    return render(request, 'features_home.html', {'no_features': no_features, 'featured_albums': features, 'article_header': "featured albums"})
 
 def lets_jam_recommend(request):
     # Recommendation Page
@@ -90,15 +96,16 @@ def lets_jam_recommend(request):
 
 def lets_jam_review(request, album_title):
     album_title = url_argument_parse(album_title)
-    albumSet = Album.objects.filter(AlbumTitle=album_title)
+    albumSet = Album.objects.filter(AlbumTitle__icontains=album_title)
     if not albumSet:
         # if empty: No Corresponding Album
         raise Http404  
     else: 
-        # we have the album
-        artist_name = "fix this";
-        review = "fix this too"; # Index and grab review.
-        return render(request, 'album_review.html', {'ALBUM': album_title, 'ARTIST': artist_name, 'REVIEW': review})
+        album_title = "Doris"
+        artist_name = "Earl Sweatshirt"
+        review = "TESTING 1 2 3"; # Index and grab review.
+        truth = 1
+        return render(request, 'album_review.html', {'true': truth, 'albumTitle': album_title, 'artistName': artist_name, 'featureReview': review, 'article_header': "album review"})
 
     # get artist from matched_artist querySet
     new_album = Album.objects.create(AlbumTitle=album_title, SpotifyAlbumID=json_Search_response['albums']['items'][0]['id'], ArtistName=artist.id, Favorite=0)
@@ -109,8 +116,7 @@ def lets_jam_review(request, album_title):
     # GET_ALBUM_REVIEW
     review = 'where my user review will be' 
     album_title  = album_title.title()
-
-    return render(request, 'album_review.html', {'ALBUM': album_title, 'ARTIST': artist_name, 'REVIEW': review})
+    return render(request, 'album_review.html', {'albumTitle': album_title, 'artistName': artist_name, 'featureReview': review, 'article_header': "album review"})
 
 #####################
 #   JAM API FUNCTIONS

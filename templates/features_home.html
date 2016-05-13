@@ -1,0 +1,25 @@
+{% extends "lets_jam.html" %}
+{% block feature_content %}
+
+{% if no_features %}
+	<h3>There are no featured albums at the moment.</h3>
+
+{% elif featured_albums %}
+	{% load tags %}
+	{% for album in featured_albums %}
+		<div class="feature">
+			<div class="album_review_detail_preview">
+				<h1>{{album.albumTitle}}</h1>
+				<h3>{{album.artistName}}</h3>
+				<p>{{album.featureReview}}</p>
+			</div>
+			<div class="album_art">
+				<a href="/time/jam_out/{{album.albumTitle|underscore}}/">
+				<img src="/static/{{album.albumTitle|underscore}}.jpg">
+				</a>
+			</div>
+		</div>
+	{% endfor %}
+{% endif %}
+
+{% endblock %}
