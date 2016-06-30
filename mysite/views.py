@@ -16,7 +16,7 @@ except ImportError:
 def current_datetime(request):
     now = strftime("%Y-%m-%d %H:%M:%S", gmtime())
     page_title = "Evan"
-    pic_url = urllib.urlopen("https://farm2.staticflickr.com/1627/24943678040_d9637bdeee_c.jpg")
+    pic_url = urllib2.urlopen("https://farm2.staticflickr.com/1627/24943678040_d9637bdeee_c.jpg")
     return render(request, 'time.html', {'current_time': now, 'page_title': page_title})
 
 def hours_ahead(request, offset):
