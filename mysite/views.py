@@ -4,7 +4,10 @@ from django.http import  Http404, HttpResponse, JsonResponse
 from time import gmtime, strftime
 import datetime
 import urllib
-import urllib2
+try:
+    import urllib.request as urllib2
+except ImportError:
+    import urllib2
 
 ###########################
 #    GENERAL PAGE FUNCTIONS

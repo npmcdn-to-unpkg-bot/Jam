@@ -23,3 +23,9 @@ class ArtistSerializer(serializers.ModelSerializer):
 class ArtistViewSet(viewsets.ModelViewSet):
     queryset = Artists.objects.all()
     serializer_class = ArtistSerializer
+
+
+# import pitchfork
+#############################
+# PITCHFORK API CONFIGURATION
+#############################

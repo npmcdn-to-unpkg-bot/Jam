@@ -48,4 +48,4 @@ class Review(models.Model):
     ArtistID = models.ForeignKey(Artists, on_delete=models.CASCADE)
     AlbumID = models.ForeignKey(Album, on_delete=models.CASCADE)
     ReviewerProfile = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    # Review = model.TextField()
+    Review = models.TextField(default="")

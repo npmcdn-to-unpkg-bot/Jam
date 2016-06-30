@@ -43,6 +43,7 @@ urlpatterns = [
     
     # API Pages
     url(r'^time/api/artists/([A-Za-z0-9_-]{1,10000})/$', artist_detail),
+    url(r'^time/api/pitchfork/search/([A-Za-z0-9_-]{1,10000})/([A-Za-z0-9_-]{1,10000})/$', search),
     # If you're intending to use the browsable API you'll probably also want to add REST framework's 
     # login and logout views. Add the following to your root urls.py file:
     # url(r'^', include(router.urls)),

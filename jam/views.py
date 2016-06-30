@@ -5,9 +5,12 @@ from django.http import  Http404, HttpResponse, JsonResponse
 from django.shortcuts import render
 from jam.models import Artists, Album
 from jam.API_Config import *
-# from django.core.mail import send_mail
+import pitchfork
 import urllib
-import urllib2
+try:
+    import urllib.request as urllib2
+except ImportError:
+    import urllib2
 import json
 
 #####################
@@ -133,6 +136,16 @@ def artist_detail(request, pk):
     if request.method == 'GET':
         serializer = ArtistSerializer(result)
         return JsonResponse(serializer.data)
+
+#######################
+# PITCHFORK API WRAPPER
+#######################
+def search(request, artist, album):
+    review = pitchfork.search(url_argument_parse(artist), url_argument_parse(album))
+    review_dictionary = {"artist": review.artist(), "album": review.album(), "label": review.label(), \
+        "score": review.score(), "editorial": review.editorial()}
+    return JsonResponse(review_dictionary)
+
 
 ###################
 #   ADMIN FUNCTIONS

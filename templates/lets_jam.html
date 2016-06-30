@@ -55,8 +55,16 @@
 	a:hover { /* HOVER OVER LINKS */
     	color: #3FC380;
 	}
+	button{
+		background-color: Transparent;
+		border: none;
+		color: #CF000F;
+		outline: none;
+		text-decoration: underline;
+	}
 	#header_placement{
 		background-color: #CF000F;
+		float:;
 		height: 17%;
 		width: 100%;
 	}
@@ -98,6 +106,10 @@
 	#features_listing{
 		padding-top: 5px;
 	}
+	#login_point{
+		float: right;
+		color: white;
+	}
 </style>
 {% endblock %}
 {% block review_page_style %}
@@ -106,6 +118,8 @@
 {% block title %}Let's Jam{% endblock %}
 
 {% block page_head %}
+<!--p>red</p-->
+<button id="login_point" onclick="toggle_login_visibility()">sign in</button>
 <h1 class="Jam">Jam</h1>
 <nav id="home_navigation">
 	<div id="nav_bar">

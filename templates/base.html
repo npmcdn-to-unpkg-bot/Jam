@@ -54,6 +54,12 @@
 	a:hover { /* HOVER OVER LINKS */
     	color: #3FC380;
 	}
+	input[type="text"] {
+		display: block;
+		appearance: none;
+		box-shadow: none;
+		border-radius: none;
+	}
 	.Ranger{  /* RANGER CLASS: TEXT */
 		color: #91eac9;
 		text-align: center;
@@ -72,9 +78,16 @@
 	.center {
 	    margin: auto;
 	}
+	.login_field{
+		padding-left: 1em;
+	}
 	#body {					/* DIV CONTAINER, id="body"*/
 	   padding: 10px;
 	   padding-bottom:60px;   
+	}
+	#login_profile_form {
+		display: none;
+		float: right;
 	}
 	#container{				/* DIV CONTAINER, id="container"*/
 		min-height: 50%;
@@ -109,7 +122,16 @@
 			</div>
 			{% block time %}{% endblock %}
 		</header>
-	</div>
+		<!-- <form id="login_profile_form" class="login_field">
+				<br>
+				<input type="text" name="username" value="username">
+				<br>
+				<input type="password" name="password" value="password">
+				<button type="button" onclick="">Login</button>
+			</form>
+			<!--a href="">forgot password?</a-->
+			<!--a href="">forgot username?</a-->
+			<!--button type="button" onclick="">New User</button-->
 	<div id="container">
 		<div id="header">
 		</div>
@@ -127,4 +149,13 @@
 		</div>
 	</div>
 </body>
+<script>
+function toggle_login_visibility() {
+       	var e = document.getElementById('login_profile_form');
+       	if(e.style.display == 'block')
+        	e.style.display = 'none';
+       	else
+        	e.style.display = 'inline-block';
+}
+</script>
 </html>
