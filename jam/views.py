@@ -142,8 +142,8 @@ def artist_detail(request, pk):
 #######################
 def search(request, artist, album):
     review = pitchfork.search(url_argument_parse(artist), url_argument_parse(album))
-    review_dictionary = {"artist": review.artist(), "album": review.album(), "label": review.label(), \
-        "score": review.score(), "editorial": review.editorial()}
+    review_dictionary = {"artist": review.artist(), "album": review.album(), "cover": review.cover(), \
+        "editorial": review.editorial(), "label": review.label(), "score": review.score()}
     return JsonResponse(review_dictionary)
 
 
