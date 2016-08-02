@@ -200,6 +200,9 @@ def add_album(request, album_query):
     page_title = "Successfully added " + spotify_Album_Name
     return render(request, 'time.html', {'current_time': now, 'page_title': page_title})
 
+def add_review(request):
+    return render(request, 'add_review.html')
+
 ###################
 #  HELPER FUNCTIONS
 ###################

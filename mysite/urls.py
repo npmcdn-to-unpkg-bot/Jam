@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from mysite.views import current_datetime, hours_ahead, evan#, lets_jam, lets_jam_review, lets_jam_recommend, add_artist, artist_detail
+from mysite.views import current_datetime, hours_ahead, evan
 from rest_framework import routers, serializers, viewsets
 from jam.models import Artists, Album
 from jam.API_Config import ArtistSerializer, ArtistViewSet
@@ -39,6 +39,7 @@ urlpatterns = [
     # url(r'^hello/$', hello),          # Hello, World
     # url(r'^time/add_artist/([a-z0-9_-]{1,100})$', add_artist), # Adding Artist to DB from Spotify API
     # url(r'^time/add_album/([A-Za-z0-9_-]{1,100})$', add_album), # Adding Album to DB from Spotify API
+    # url(r'^time/jam_out/add_review/$', add_review),
 
     
     # API Pages
@@ -53,16 +54,17 @@ urlpatterns = [
     # WEB PAGES
     url(r'^$', current_datetime),
     url(r'^time/$', current_datetime),
+    url(r'^time/evan/$', evan),
+    url(r'^time/plus/(\d{1,2})/$', hours_ahead),
+
+    # JAM PAGES
     url(r'^time/jam_out/$', lets_jam),
     url(r'^time/jam_out$', lets_jam),
     url(r'^time/jam_out/recommend/$', lets_jam_recommend),
     url(r'^time/jam_out/([A-Za-z0-9_-]{1,100})/$', lets_jam_review),
-    url(r'^time/evan/$', evan),
-    url(r'^time/plus/(\d{1,2})/$', hours_ahead),
 
 ]
 
 # Importing Static File URLS
-
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 urlpatterns += staticfiles_urlpatterns()

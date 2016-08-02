@@ -1,0 +1,25 @@
+{% extends "lets_jam.html" %}
+
+{% block page_content %}
+<div id="add_review_block" style="margin: auto; width:250px;">
+	<form id="add_review" action="add_review">
+		Artist:<br>
+	  	<input type="text" id="artist"><br>
+		Album:<br>
+		<input type="text" id="album"><br>
+		Review:<br>
+		<input type="text" id="review_text" width="200" style="line-height: 15em"><br>
+		<input type="submit" name="submit_review" value="Submit">
+	</form>
+</div>
+<script type="text/javascript">
+	function add_review(){
+		var artist = document.getElementById("artist");
+		var album = document.getElementById("album");
+		var review = document.getElementById("reivew_text");
+
+		// I want to POST information to add_review
+	}
+</script>
+
+{% endblock %}
