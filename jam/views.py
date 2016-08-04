@@ -1,17 +1,22 @@
 from django import template
 from time import gmtime, strftime
+
 from django.shortcuts import get_object_or_404, render
-from django.http import  Http404, HttpResponse, JsonResponse
-from django.shortcuts import render
+from django.http import  Http404, HttpResponse
+
 from jam.models import Artists, Album
-from jam.API_Config import *
-import pitchfork
+from jam.jam_admin import * 
+from jam.jam_api import *
+from jam.spotify_api import *
+from jam.pitchfork_api import *
+
+import json
 import urllib
+
 try:
     import urllib.request as urllib2
 except ImportError:
     import urllib2
-import json
 
 #####################
 #  3RD PARTY API KEYS
@@ -120,126 +125,6 @@ def lets_jam_review(request, album_title):
     review = 'where my user review will be' 
     album_title  = album_title.title()
     return render(request, 'album_review.html', {'albumTitle': album_title, 'artistName': artist_name, 'featureReview': review, 'article_header': "album review"})
-
-#####################
-#   JAM API FUNCTIONS
-#####################
-
-def artist_detail(request, pk):
-    # pk = primary key = Artist.SpotifyID
-    try:
-        result = Artists.objects.get(SpotifyID = pk)
-    except Artists.DoesNotExist: 
-        # Don't like this, return a JSON with error message not 404 response
-        return HttpResponse(status=404)
-
-    if request.method == 'GET':
-        serializer = ArtistSerializer(result)
-        return JsonResponse(serializer.data)
-
-#######################
-# PITCHFORK API WRAPPER
-#######################
-def search(request, artist, album):
-    review = pitchfork.search(url_argument_parse(artist), url_argument_parse(album))
-    review_dictionary = {"artist": review.artist(), "album": review.album(), \
-        "editorial": review.editorial(), "label": review.label(), "score": review.score()}
-    return JsonResponse(review_dictionary)
-
-
-###################
-#   ADMIN FUNCTIONS
-###################
-
-def add_artist(request, artist_query):
-    artist_query = url_argument_parse(artist_query)
-    json_Search_response_artist, json_Search_response_album = spotify_gen_search(artist_query)
-
-    spotify_Artist_ID = json_Search_response_artist['artists']['items'][0]['id']
-    spotify_Artist_Name = json_Search_response_artist['artists']['items'][0]['name']
-
-    if (json_Search_response_artist['artists']['items'][0]['genres'] != [ ]):
-            spotify_Primary_Genre = json_Search_response_artist['artists']['items'][0]['genres'][0]
-            try: 
-                spotify_Secondary_Genre = json_Search_response_artist['artists']['items'][0]['genres'][1]
-            except IndexError:
-                spotify_Secondary_Genre = 'undefined'
-    else:
-        spotify_Primary_Genre = 'undefined'
-        spotify_Secondary_Genre = 'undefined'
-
-    new_artist = Artists.objects.create(ArtistName=spotify_Artist_Name, SpotifyID=spotify_Artist_ID, PrimaryGenre=spotify_Primary_Genre, SecondaryGenre=spotify_Secondary_Genre)
-    new_artist.save()
-
-    # temp success page redirect
-    now = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-    page_title = "Evan"
-    pic_url = urllib2.urlopen("https://farm2.staticflickr.com/1627/24943678040_d9637bdeee_c.jpg")
-    return render(request, 'time.html', {'current_time': now, 'page_title': page_title})
-
-
-def add_album(request, album_query):
-    album_query = url_argument_parse(album_query)
-    json_Search_response_artist, json_Search_response_album = spotify_gen_search(album_query)
-
-    spotify_Album_ID = json_Search_response_album['albums']['items'][0]['id']
-    spotify_Album_Name = json_Search_response_album['albums']['items'][0]['name']
-
-    json_Search_response_album = spotify_album_search(spotify_Album_ID)
-    spotify_Artist_ID = json_Search_response_album["artists"][0]["id"]
-    spotify_Artist_Name = json_Search_response_album["artists"][0]["name"]
-
-    artist = Artists.objects.filter(SpotifyID=spotify_Artist_ID)
-    artist = list(artist[:1])
-
-    new_album = Album.objects.create(AlbumTitle=spotify_Album_Name, SpotifyAlbumID=spotify_Album_ID, ArtistID=artist[0])
-    new_album.save()
-
-
-    now = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-    page_title = "Successfully added " + spotify_Album_Name
-    return render(request, 'time.html', {'current_time': now, 'page_title': page_title})
-
-def add_review(request):
-    return render(request, 'add_review.html')
-
-###################
-#  HELPER FUNCTIONS
-###################
-
-def spotify_gen_search(recommened_item):
-    spotify_Search_response_album = urllib2.urlopen('https://api.spotify.com/v1/search?q=' + convert_to_query(recommened_item) + '&type=album&market=US')
-    json_Search_response_album = json.load(spotify_Search_response_album)
-    spotify_Search_response_artist = urllib2.urlopen('https://api.spotify.com/v1/search?q=' + convert_to_query(recommened_item) + '&type=artist&market=US')
-    json_Search_response_artist = json.load(spotify_Search_response_artist)
-    return json_Search_response_artist, json_Search_response_album
-
-def spotify_album_search(album_id):
-    api_url = "https://api.spotify.com/v1/albums/" + album_id + "?market=US"
-    json_Search_response_album = json.load(urllib2.urlopen(api_url))
-    return json_Search_response_album
-
-
-def url_argument_parse(album):
-    title = ''
-    frontOfString = 0
-    for character in range(len(album)):
-        if (album[character] == '_'):
-            title += album[frontOfString:character]
-            title += ' '
-            frontOfString = character+1
-        elif(character == len(album)-1):
-            title += album[frontOfString:]
-    return title
-
-def convert_to_query(album_title):
-    queryTitle = ''
-    for character in range(len(album_title)):
-        if album_title[character] == ' ':
-            queryTitle += '+'
-        else:
-            queryTitle += album_title[character]
-    return queryTitle
 
 ######################
 # DEPRICATED FUNCTIONS
