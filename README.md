@@ -1,7 +1,7 @@
 # Jam
 Personal Website 
-Personal Music Catalogue
-Django App for Recommending New Music
+/ Personal Music Catalogue 
+/ Django App for Recommending New Music
 
 ### Deploying Project Locally
 
