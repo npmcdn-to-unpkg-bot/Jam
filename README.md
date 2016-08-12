@@ -6,9 +6,11 @@ Django App for Recommending New Music
 ### Deploying Project Locally
 
 After cloning and prior to starting the Django Development Server, you must first install the require dependcies using the command: 
+
 `(myproject_env)$ pip install -r requirements.txt`
 
 To start the Django Development Server run command:
+
 `(myproject_env)$ python3 manage.py runserver`
 
   **Note:**
