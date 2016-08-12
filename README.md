@@ -20,7 +20,7 @@ In your browser of choice, visit URL: http://127.0.0.1:8000/time/
 
 ### Extraneous yet Important details about the project outside this repo
 
-I have excluded all of my static files from this repo and they only exist locally on my computer and hosted on my [website](www.evancarter.me) which is deployed on Heroku.
+I have excluded all of my static files from this repo and they only exist locally on my computer and hosted on my [website](http://www.evancarter.me) which is deployed on Heroku.
 
 I have also excluded my SQLite database binary files, which contain all the existing tables and entry rows necessary to fully see the functionality of this application such as serving specific content of individual album reviews, album covers, and (at some point soon) profile details.
 
