@@ -1,5 +1,3 @@
-#jam/API_Config.py
-
 from rest_framework import serializers, viewsets
 from jam.models import Artists
 
