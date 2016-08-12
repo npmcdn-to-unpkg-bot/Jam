@@ -5,15 +5,14 @@ Django App for Recommending New Music
 
 ### Deploying Project Locally
 
-After cloning and prior to starting the Django Development Server in the cloned folder run the command: 
-(myproject_env)$ pip install -r requirements.txt
-This will install the neccessary project dependencies.
+After cloning and prior to starting the Django Development Server, you must first install the require dependcies using the command: 
+`(myproject_env)$ pip install -r requirements.txt`
 
 To start the Django Development Server run command:
-(myproject_env)$ python3 manage.py runserver
+`(myproject_env)$ python3 manage.py runserver`
 
   **Note:**
-  Parts of this project are dependent on running the server in Python 3 (which is what I have defined in my runtime.txt file) instead of 2.7. Particularly, in the pitchfork_api.py, which uses an imported package named `pitchfork` does not work with Python 2.*. You may find more about the issues involving that particular package [here](https://github.com/michalczaplinski/pitchfork).
+  Parts of this project are dependent on running the server in Python 3 (which is what I have defined in my runtime.txt file) instead of 2.7, particularly, in pitchfork_api.py, which uses an imported package named `pitchfork` that does not work with Python 2.*. You may find more about the issues involving that particular package [here](https://github.com/michalczaplinski/pitchfork).
 
 In your browser of choice, visit URL: http://127.0.0.1:8000/time/
 
