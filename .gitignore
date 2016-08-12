@@ -2,5 +2,6 @@
 *.pyc
 *.jpg
 *.cpython-35.pyc
+__resume__.pdf
 evralcar.db
 db.sqlite3
