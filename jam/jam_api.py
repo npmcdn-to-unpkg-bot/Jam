@@ -32,3 +32,11 @@ class ArtistDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Artists.objects.all()
     serializer_class = ArtistSerializer    
     # generics pre-packaged functions: get(), put(), destroy() 
+
+class AlbumList(generics.ListCreateAPIView):
+    querySet = Albums.objects.all()
+    serializer_class = AlbumSerializer
+
+class AlbumDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Album.objects.all()
+    serializer_class = AlbumSerializer

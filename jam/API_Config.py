@@ -12,8 +12,15 @@ class ArtistSerializer(serializers.ModelSerializer):
         model = Artists
         fields = ('ArtistName', 'SpotifyID', 'PrimaryGenre', 'SecondaryGenre')
 
+class AlbumSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Album
+        fields = ('AlbumTitle', 'SpotifyAlbumID', 'AritstID', 'Favorite')
+
 
 # ViewSets define the view behavior.
 class ArtistViewSet(viewsets.ModelViewSet):
     queryset = Artists.objects.all()
     serializer_class = ArtistSerializer
+
