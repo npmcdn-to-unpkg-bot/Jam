@@ -13,24 +13,85 @@
 {{article_header}}
 
 {% block feature_content %}
-{% if true %}
-	{% load staticfiles %}
-	{% load tags %}
-	<div class="feature">
-		<div class="album_review_detail_preview">
-			<h1>{{albumTitle}}</h1>
-			<h3>{{artistName}}</h3>
-		</div>
-		<div class="album_art">
-			<img src="/static/{{albumTitle|underscore}}.jpg">
-		</div>
+{% load staticfiles %}
+{% load tags %}
+<div class="feature">
+	<div class="album_review_detail_preview">
+		<h1>{{albumTitle}}</h1>
+		<h3>{{artistName}}</h3>
 	</div>
-	<!-- this is messed up-->
-	<div id="article_body">
-			<p>{{featureReview}}</p>
+	<div class="album_art">
+		<img src="/static/{{albumTitle|underscore}}.jpg">
 	</div>
+</div>
+<div id="article_body">
+		<p>{{featureReview}}</p>
+</div>
+{% endblock %}
 
-{% else %}
-	<h3>Oops. Looks like there is nothing here. Sorry about that.</h3>
-{% endif %}
+{% block child_scripts %}
+<!--script src="https://npmcdn.com/react@15.3.0/dist/react.js"></script>
+<script src="https://npmcdn.com/react-dom@15.3.0/dist/react-dom.js"></script>
+<-->
+<script>
+function staticSource(file){
+	var staticPath = "/static/";
+	for (var i = 0; i < file.length; i++){
+		if (file[i] == " ")
+			staticPath += "_";
+		else
+			staticPath += file[i];
+	}
+	return staticPath + ".jpg";
+}
+var ReviewPreview = React.createClass({
+	render : function(){
+		return(
+			<div class="album_review_detail_preview">
+				<h1>{{albumTitle}}</h1>
+				<h3>{{artistName}}</h3>
+			</div>
+		);
+	}
+});
+var AlbumArt = React.createClass({
+	render : function(){
+		return (
+			<div class="album_art">
+				<img src=staticSource(this.props.albumTitle)>
+			</div>
+		);
+	}
+});
+var Feature = React.createClass({
+	getInitialState : function(){
+		return (
+
+		);
+	},
+	render : function(){
+		return (
+			<ReviewPreview/>
+			<AlbumArt albumTitle={}/>
+		);
+	}
+});
+ReactDOM.render(){
+	<Feature/>
+	document.getElementbyID('feature');
+}
+var ArticleBody = React.createClass({
+	render : function(){
+		return(
+			<div id="article_body">
+				<p>{featureReview}</p>
+			</div>
+		);
+	}
+});
+ReactDOM.render(){
+	<ArticleBody/>
+	document.getElementbyID('feature');
+}
+</script>
 {% endblock %}

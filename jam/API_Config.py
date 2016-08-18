@@ -1,5 +1,5 @@
 from rest_framework import serializers, viewsets
-from jam.models import Artists
+from jam.models import Artists, Album
 
 ###################
 # API CONFIGURATION

@@ -105,26 +105,15 @@ def lets_jam_recommend(request):
 def lets_jam_review(request, album_title):
     album_title = url_argument_parse(album_title)
     albumSet = Album.objects.filter(AlbumTitle__icontains=album_title)
+    print(albumSet)
     if not albumSet:
         # if empty: No Corresponding Album
         raise Http404  
     else: 
-        album_title = "Doris"
-        artist_name = "Earl Sweatshirt"
-        review = "TESTING 1 2 3"; # Index and grab review.
-        truth = 1
-        return render(request, 'album_review.html', {'true': truth, 'albumTitle': album_title, 'artistName': artist_name, 'featureReview': review, 'article_header': "album review"})
-
-    # get artist from matched_artist querySet
-    new_album = Album.objects.create(AlbumTitle=album_title, SpotifyAlbumID=json_Search_response['albums']['items'][0]['id'], ArtistName=artist.id, Favorite=0)
-    new_album.save()
-    # else:
-        # Get album from database // Index
-
-    # GET_ALBUM_REVIEW
-    review = 'where my user review will be' 
-    album_title  = album_title.title()
-    return render(request, 'album_review.html', {'albumTitle': album_title, 'artistName': artist_name, 'featureReview': review, 'article_header': "album review"})
+        album_title = albumSet[0].AlbumTitle
+        artist_name = Artists.objects.get(SpotifyID=albumSet[0].ArtistID.SpotifyID).ArtistName
+        review = "This is where the Full Review is" # Index and grab review.
+        return render(request, 'album_review.html', {'albumTitle': album_title, 'artistName': artist_name, 'featureReview': review, 'article_header': "album review"})
 
 ######################
 # DEPRICATED FUNCTIONS

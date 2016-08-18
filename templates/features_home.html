@@ -24,3 +24,23 @@
 {% endif %}
 
 {% endblock %}
+
+{% block child_scripts %}
+<!--script src="https://npmcdn.com/react@15.3.0/dist/react.js"></script>
+<script src="https://npmcdn.com/react-dom@15.3.0/dist/react-dom.js"></script>
+<script>
+	var FeatureBlock = React.createClass({
+		render : function(){
+			return(
+				<h1>{{album.albumTitle}}</h1>
+				<h3>{{album.artistName}}</h3>
+				<p>{{album.featureReview}}</p>
+			)
+		};
+	});
+	ReactDOM.render(){
+		<FeatureBlock/>
+		document.getElementById('feature')
+	}
+</script-->
+{% endblock %}
